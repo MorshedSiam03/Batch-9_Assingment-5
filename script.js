@@ -1,8 +1,7 @@
-
-// get the all seat from the button 
 const seats = document.querySelectorAll('.seat');
 let sum = 0;
 let count = 1;
+let isSelected = false;
  
 function checkInput() {
     const numberElement = document.getElementById('number');
@@ -16,13 +15,12 @@ function checkInput() {
   }
 for(let index = 0; index < seats.length; index++){
     const seat = seats[index];
-    
-
-    
 
     seat.addEventListener('click', function(){
-        // get seat details
-        // checkInput()
+        
+        isSelected = !isSelected;
+
+    if (isSelected) {
 
         if (count >= 5) {
             seat.disabled = true;
@@ -32,13 +30,13 @@ for(let index = 0; index < seats.length; index++){
         const seatContainerElement = document.getElementById('seat-container')
         seat.style.backgroundColor = '#1DD100';
         seat.style.color = '#fff';
-        // seat.style.disabled = true;
+
         const p = document.createElement('p');
         const h3 = document.createElement('h3');
         const h4 = document.createElement('h4');
         const getSeatText = seat.innerText;
         p.innerText = getSeatText 
-        h3.innerText = 'Economoy';
+        h3.innerText = 'Economy';
         h4.innerText = 550;
         seatContainerElement.appendChild(p);
         seatContainerElement.appendChild(h3);
@@ -58,8 +56,8 @@ for(let index = 0; index < seats.length; index++){
             const copuponCodElement = document.getElementById('copupon-btn');
             copuponCodElement.disabled = false;
         }
-
-
+        
+        
        
         // grand total calculation area
         const grandTotalElement = document.getElementById('grand-total');
@@ -69,8 +67,17 @@ for(let index = 0; index < seats.length; index++){
         let seatLeft = parseFloat(seatLeftElement.innerText);
         seatLeft--; 
         seatLeftElement.innerText = seatLeft;  
+
+    } else {   
+        // If deselected, remove selected styles
+        seat.style.backgroundColor = ''; // Restore default background color
+        seat.style.color = ''; // Restore default text color
+        // Other actions related to deselecting the seat...
+
+    }
         
     });
+
     
 }
 
@@ -84,7 +91,8 @@ document.getElementById('copupon-btn').addEventListener('click', function(){
         const grandTotal = parseFloat(grandTotalElement);
         const discount = grandTotal * 0.15
         const cost = grandTotal - discount
-       
+
+        document.getElementById('discount').innerText = discount
         document.getElementById('grand-total').innerText = cost
         copuponCodElement.style.display = 'none';
     } else if(codeElement === 'Couple 20'){
@@ -107,8 +115,8 @@ document.getElementById('next-btn').addEventListener('click', function() {
     Swal.fire({
         position: "top-center",
         icon: "success",
-        title: "Thank you for Booking Our Bus Seats.",
-        text: " We are working hard to find the best service and deals for you.Shortly you will find a confirmation in your email.",
+        title: "Thank you for Booking, best Of Luck For You Journey",
+        text: "We are working hard to find the best service and deals for you. Shortly you will find a confirmation in your email.",
         confirmButtonText: "Continue",
         showConfirmButton: true,
         timer: 5000
